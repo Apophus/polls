@@ -1,8 +1,9 @@
 from django.test import LiveServerTestCase
 from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.keys import Keys #willcheck password_field
 
 class PollsTest(LiveServerTestCase):
+	fixtures =['admin_user.json']
 
 	def setUp(self):
 		self.browser = webdriver.Firefox()

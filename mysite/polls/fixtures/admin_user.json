@@ -1,0 +1,20 @@
+[
+{
+  "model": "auth.user",
+  "pk": 1,
+  "fields": {
+    "password": "pbkdf2_sha256$30000$ot55IC8zGGwU$E9wawrzn8j/hszJsEvVhEHC77Xn9KVeKYdBv+6PRmuM=",
+    "last_login": "2016-08-30T08:30:46.235Z",
+    "is_superuser": true,
+    "username": "larrisa",
+    "first_name": "",
+    "last_name": "",
+    "email": "bkilel12@gmail.com",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2016-08-30T08:23:48.083Z",
+    "groups": [],
+    "user_permissions": []
+  }
+}
+]
