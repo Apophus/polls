@@ -90,3 +90,6 @@ mysite/dbsqlite3
 
 # Rope project settings
 .ropeproject
+
+#Pycharm
+/.idea
