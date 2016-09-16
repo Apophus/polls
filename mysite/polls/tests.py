@@ -1,41 +1,26 @@
-from django.test import LiveServerTestCase
-from selenium import webdriver
-from selenium.webdriver.common.keys import Keys #willcheck password_field
+# unit test
 
-class PollsTest(LiveServerTestCase):
-	fixtures =['admin_user.json']
+from django.test import TestCase
+from django.utils import timezone
+from polls.models import Poll
 
-	def setUp(self):
-		self.browser = webdriver.Firefox()
-		self.browser.implicitly_wait(3)
 
-	def tearDown(self):
-		self.browser.quit()
+class PollModelTest(TestCase):
+    def create_poll_and_save_to_db(self):
+        # create new poll object with it's question create_poll_and_save_to_db
+        poll = Poll()
+        poll.question = "What's up?"
+        poll.pub_date = timezone.now()
 
-	def test_can_create_new_poll_via_admin_site(self):
-		#kilel opens web browser and goes to admin page"
-		self.browser.get(self.live_server_url + '/admin/')
+        # check if we can save it to db
+        poll.save()
 
-		#he sees the farmiliar 'Django administration' heading
-		body = self.browser.find_element_by_tag_name('body')
-		self.assertIn('Django administration', body.text)
+        # look for our poll in the db
+        all_polls_in_database = Poll.objects.all()
+        self.assertEquals(len(all_polls_in_database), 1)
+        only_poll_in_database = all_polls_in_database[0]
+        self.assertEquals(only_poll_in_database, poll)
 
-		#types in username and password and hits return
-		username_field = self.browser.find_element_by_name('username')
-		username_field.send_keys('larrisa')
-
-		password_field = self.browser.find_element_by_name('password')
-		password_field.send_keys('hkilel07')
-		password_field.send_keys(Keys.RETURN)
-
-		#username and password are accepted and 
-		#redirected to admin page
-		body = self.browser.find_element_by_tag_name('body')
-		self.assertIn('Site administration', body.text)
-
-		#check if there's a hyperlink called polls
-		polls_links = self.browser.find_element_by_link_text('Polls')
-		self.assertEquals(len(polls_links), 2)
-
-		#TODO: use admin site to create a Poll
-		self.fail('finish this test')
+        # check if the attributes: question and pub_date are saved.
+        self.assertEquals(only_poll_in_database.question, "What's up?")
+        self.assertEquals(only_poll_in_database.pub_date, poll.pub_date)
